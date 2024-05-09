@@ -1,7 +1,7 @@
 """ Create Clone from a DP Volume in a non-prod environment """
+import time
 from netapp_ontap import config, HostConnection, NetAppRestError
 from netapp_ontap.resources import SnapmirrorRelationship, Volume
-import time
 
 FSXN_MANAGEMENT_ENDPOINT = "<FILESYSTEM MANAGMENT ENDPOINT>"
 FSXN_USER = "fsxadmin"
@@ -17,7 +17,8 @@ config.CONNECTION = HostConnection(FSXN_MANAGEMENT_ENDPOINT, FSXN_USER, FSXN_USE
 def print_snapmirror_details(snapmirror):
     """ Prints SnapMirror Relationship Info """
     print("Source: " + snapmirror.source.path + " --> Destination: " +
-          snapmirror.destination.path + ", UUID: " + snapmirror.uuid + ", Status: " + snapmirror.state)
+          snapmirror.destination.path + ", UUID: " + snapmirror.uuid + 
+          ", Status: " + snapmirror.state)
 
 def update_snapmirror_state(snapmirror, new_state):
     """ Updates SnapMirror Relationship State """
@@ -31,6 +32,7 @@ def handle_netapp_error(action, action_name, *args):
         return action(*args)
     except NetAppRestError as error:
         print("Exception caught while " + action_name + ": " + str(error))
+        raise
 
 def search_snapmirror_relationships():
     """ Find the SnapMirror Relationship for the Destination SVM and Volume name """
@@ -53,8 +55,18 @@ def create_clone(svm_uuid, vol_name, clone_name):
     dataobj = {}
     dataobj['svm'] = tmp
     dataobj['name'] = clone_name
-    clone_volume_json = {"is_flexclone": bool("true"), "parent_svm": {
-        "name": SVM_NAME, "uuid": svm_uuid}, "parent_volume": {"name": parent_volume.name, "uuid": parent_volume.uuid}}
+    clone_volume_json = 
+    {
+        "is_flexclone": bool("true"), 
+        "parent_svm": 
+        {
+            "name": SVM_NAME, "uuid": svm_uuid
+        }, 
+        "parent_volume": 
+        {
+            "name": parent_volume.name, "uuid": parent_volume.uuid
+        }
+    }
     dataobj['clone'] = clone_volume_json
     volume = Volume.from_dict(dataobj)
     volume.post(poll=True)
