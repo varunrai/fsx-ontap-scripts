@@ -13,38 +13,38 @@ CLONE_JUNCTION_PATH = "/vol_clone"
 
 config.CONNECTION = HostConnection(FSXN_MANAGEMENT_ENDPOINT, FSXN_USER, FSXN_USER_PWD, verify=False)
 
-""" Prints SnapMirror Relationship Info """
 def print_snapmirror_details(snapmirror):
+    """ Prints SnapMirror Relationship Info """
     print("Source: " + snapmirror.source.path + " --> Destination: " +
           snapmirror.destination.path + ", UUID: " + snapmirror.uuid + ", Status: " + snapmirror.state)
 
-""" Updates SnapMirror Relationship State """
 def update_snapmirror_state(snapmirror, new_state):
+    """ Updates SnapMirror Relationship State """
     snapmirror.state = new_state
     if snapmirror.patch(poll=True):
         print("Snapmirror Relationship Updated Successfully to " + new_state)
 
-""" Handles NetApp REST exceptions """
 def handle_netapp_error(action, action_name, *args):
+    """ Handles NetApp REST exceptions """
     try:
         return action(*args)
     except NetAppRestError as error:
         print("Exception caught while " + action_name + ": " + str(error))
 
-""" Find the SnapMirror Relationship for the Destination SVM and Volume name """
 def search_snapmirror_relationships():
+    """ Find the SnapMirror Relationship for the Destination SVM and Volume name """
     return SnapmirrorRelationship.find(destination={"path": SVM_NAME + ":" + VOL_NAME})
 
-""" Delete Volume Clones """
 def delete_volume_clones(vol_name):
+    """ Delete Volume Clones """
     for volume in Volume.get_collection(**{"clone.is_flexclone": True, "clone.parent_volume.name": vol_name}):
         print("Parent Volume: " + vol_name + " --> Clone: " +
               volume.name + ", Cloned Volume UUID: " + volume.uuid)
         print("Deleting Clone: " + volume.name)
         volume.delete(force=True)
 
-""" Create Volume Clone """
 def create_clone(svm_uuid, vol_name, clone_name):
+    """ Create Volume Clone """
     print("Retrieving Parent Volume Details")
     parent_volume = Volume.find(name=vol_name)
     print("Creating Clone: " + clone_name)
