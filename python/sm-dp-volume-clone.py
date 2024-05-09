@@ -1,3 +1,4 @@
+""" Create Clone from a DP Volume in a non-prod environment """
 from netapp_ontap import config, HostConnection, NetAppRestError
 from netapp_ontap.resources import SnapmirrorRelationship, Volume
 import time
@@ -61,31 +62,31 @@ def create_clone(svm_uuid, vol_name, clone_name):
 
 print("Searching for SnapMirror Relationship for Destination SVM: " +
       SVM_NAME + " and Volume: " + VOL_NAME)
-snapmirror = handle_netapp_error(search_snapmirror_relationships, "searching for SnapMirror Relationships")
-print_snapmirror_details(snapmirror)
+snapmirrorRelationship = handle_netapp_error(search_snapmirror_relationships, "searching for SnapMirror Relationships")
+print_snapmirror_details(snapmirrorRelationship)
 
-svm_uuid = snapmirror.destination.svm.uuid
-print("Searching for Clones of volume: " + snapmirror.destination.path)
+svmUUID = snapmirrorRelationship.destination.svm.uuid
+print("Searching for Clones of volume: " + snapmirrorRelationship.destination.path)
 handle_netapp_error(delete_volume_clones, "searching for clones", VOL_NAME)
 
 
 print("Resuming the SnapMirror Relationship")
-if snapmirror.state == "broken_off":
-    update_snapmirror_state(snapmirror, "snapmirrored")
+if snapmirrorRelationship.state == "broken_off":
+    update_snapmirror_state(snapmirrorRelationship, "snapmirrored")
 
 print("Checking the sync status")
 time.sleep(5)
-smStatus = SnapmirrorRelationship.find(uuid=snapmirror.uuid)
+smStatus = SnapmirrorRelationship.find(uuid=snapmirrorRelationship.uuid)
 while smStatus.state == "snapmirrored" and smStatus.transfer.state == "transferring":
     print("Data is being synced from source. Waiting 5 seconds..")
     time.sleep(5)
-    smStatus = SnapmirrorRelationship.find(uuid=snapmirror.uuid)
+    smStatus = SnapmirrorRelationship.find(uuid=snapmirrorRelationship.uuid)
     if (smStatus.state == "snapmirrored" and smStatus.transfer.state == "success"):
         print("Data Sync complete from source")
 
-print("Breaking the SnapMirror Relationship")    
-if snapmirror.state == "snapmirrored":
-    update_snapmirror_state(snapmirror, "broken_off")
+print("Breaking the SnapMirror Relationship")
+if snapmirrorRelationship.state == "snapmirrored":
+    update_snapmirror_state(snapmirrorRelationship, "broken_off")
 
 handle_netapp_error(
-    create_clone, "retrieving parent volume details", svm_uuid, VOL_NAME, CLONE_NAME)
+    create_clone, "retrieving parent volume details", svmUUID, VOL_NAME, CLONE_NAME)
