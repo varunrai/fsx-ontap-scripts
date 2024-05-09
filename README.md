@@ -8,3 +8,6 @@ Various automation scripts for Amazon FSx for NetApp ONTAP
 - Wait for sync to complete
 - Break the SnapMirror Relationship
 - Create Clone
+
+> [!NOTE]
+> There are several ways of creating a clone one of which does not require breaking the SnapMirror relationship. This scenario is meant for non-prod environments where continuity of SnapMirror is not essential and the environment requires the latest data when performing the clone refresh.
