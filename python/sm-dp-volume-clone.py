@@ -61,10 +61,10 @@ def create_clone(svm_uuid, vol_name, clone_name):
 
 print("Searching for SnapMirror Relationship for Destination SVM: " +
       SVM_NAME + " and Volume: " + VOL_NAME)
-global snapmirror = handle_netapp_error(search_snapmirror_relationships, "searching for SnapMirror Relationships")
+snapmirror = handle_netapp_error(search_snapmirror_relationships, "searching for SnapMirror Relationships")
 print_snapmirror_details(snapmirror)
 
-global svm_uuid = snapmirror.destination.svm.uuid
+svm_uuid = snapmirror.destination.svm.uuid
 print("Searching for Clones of volume: " + snapmirror.destination.path)
 handle_netapp_error(delete_volume_clones, "searching for clones", VOL_NAME)
 
