@@ -17,7 +17,7 @@ config.CONNECTION = HostConnection(FSXN_MANAGEMENT_ENDPOINT, FSXN_USER, FSXN_USE
 def print_snapmirror_details(snapmirror):
     """ Prints SnapMirror Relationship Info """
     print("Source: " + snapmirror.source.path + " --> Destination: " +
-          snapmirror.destination.path + ", UUID: " + snapmirror.uuid + 
+          snapmirror.destination.path + ", UUID: " + snapmirror.uuid +
           ", Status: " + snapmirror.state)
 
 def update_snapmirror_state(snapmirror, new_state):
@@ -40,7 +40,8 @@ def search_snapmirror_relationships():
 
 def delete_volume_clones(vol_name):
     """ Delete Volume Clones """
-    for volume in Volume.get_collection(**{"clone.is_flexclone": True, "clone.parent_volume.name": vol_name}):
+    for volume in Volume.get_collection(**{"clone.is_flexclone": True, 
+                                           "clone.parent_volume.name": vol_name}):
         print("Parent Volume: " + vol_name + " --> Clone: " +
               volume.name + ", Cloned Volume UUID: " + volume.uuid)
         print("Deleting Clone: " + volume.name)
@@ -60,7 +61,7 @@ def create_clone(svm_uuid, vol_name, clone_name):
         "parent_svm": 
         {
             "name": SVM_NAME, "uuid": svm_uuid
-        }, 
+        },
         "parent_volume": 
         {
             "name": parent_volume.name, "uuid": parent_volume.uuid
@@ -73,7 +74,8 @@ def create_clone(svm_uuid, vol_name, clone_name):
 
 print("Searching for SnapMirror Relationship for Destination SVM: " +
       SVM_NAME + " and Volume: " + VOL_NAME)
-snapmirrorRelationship = handle_netapp_error(search_snapmirror_relationships, "searching for SnapMirror Relationships")
+snapmirrorRelationship = handle_netapp_error(search_snapmirror_relationships, 
+                            "searching for SnapMirror Relationships")
 print_snapmirror_details(snapmirrorRelationship)
 
 svmUUID = snapmirrorRelationship.destination.svm.uuid
