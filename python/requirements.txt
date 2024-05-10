@@ -1,1 +1,1 @@
-netapp_ontap=9.14.1
+netapp_ontap==9.14.1
