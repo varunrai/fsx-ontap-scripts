@@ -1,3 +1,4 @@
+# pylint: disable=invalid-name
 """ Create Clone from a DP Volume in a non-prod environment """
 import time
 from netapp_ontap import config, HostConnection, NetAppRestError
@@ -40,7 +41,7 @@ def search_snapmirror_relationships():
 
 def delete_volume_clones(vol_name):
     """ Delete Volume Clones """
-    for volume in Volume.get_collection(**{"clone.is_flexclone": True, 
+    for volume in Volume.get_collection(**{"clone.is_flexclone": True,
                                            "clone.parent_volume.name": vol_name}):
         print("Parent Volume: " + vol_name + " --> Clone: " +
               volume.name + ", Cloned Volume UUID: " + volume.uuid)
@@ -74,7 +75,7 @@ def create_clone(svm_uuid, vol_name, clone_name):
 
 print("Searching for SnapMirror Relationship for Destination SVM: " +
       SVM_NAME + " and Volume: " + VOL_NAME)
-snapmirrorRelationship = handle_netapp_error(search_snapmirror_relationships, 
+snapmirrorRelationship = handle_netapp_error(search_snapmirror_relationships,
                             "searching for SnapMirror Relationships")
 print_snapmirror_details(snapmirrorRelationship)
 
