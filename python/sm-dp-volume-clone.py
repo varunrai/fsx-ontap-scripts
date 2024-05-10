@@ -55,8 +55,7 @@ def create_clone(svm_uuid, vol_name, clone_name):
     dataobj = {}
     dataobj['svm'] = tmp
     dataobj['name'] = clone_name
-    clone_volume_json = 
-    {
+    clone_volume_json = {
         "is_flexclone": bool("true"), 
         "parent_svm": 
         {
