@@ -25,12 +25,12 @@ echo -n 'Re-enter the password for '$serviceAcc': '
 read -s repassword
 echo
 
-if [ $password != $repassword ]; then
+if [ "$password" != "$repassword" ]; then
        echo "Entered passwords do not match"
        exit;
 fi
 
-echo -n 'Enter the password for FileSystem Admin 'fsxadmin': '
+echo -n 'Enter the password for FileSystem Admin "fsxadmin": '
 read -s fsxpassword
 echo
 
@@ -49,7 +49,7 @@ while [ $search == 0 ]
 do
         echo -n "Checking Status.. "
         # Code to be executed
-        svm_status=$(aws fsx describe-storage-virtual-machines --region $region --query 'StorageVirtualMachines[?Name==`'$svmName'`].[Name, Lifecycle]' --output text)
+        svm_status=$(aws fsx describe-storage-virtual-machines --region "$region" --query 'StorageVirtualMachines[?Name==`'$svmName'`].[Name, Lifecycle]' --output text)
         echo -n "{${svm_status}]"
         echo
         if [[ $svm_status == *CREATED* ]]; then
