@@ -1,4 +1,3 @@
-````markdown
 # Amazon FSx for NetApp ONTAP - Enable S3 Protocol on NAS volumes
 
 ## Overview
@@ -25,9 +24,8 @@ This script helps to enable the S3 protocol on NAS volumes in an Amazon FSx for 
 
 ## Demo
 
-[![Watch the video](resources/ONTAP-S3-Automation.mp4)](resources/ONTAP-S3-Automation.mp4)
+![alt text](resources/ONTAP-S3-Automation.gif, "Demo")
 
 ## License
 
 This project is licensed under the MIT License.
-````
