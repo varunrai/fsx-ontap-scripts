@@ -24,7 +24,7 @@ This script helps to enable the S3 protocol on NAS volumes in an Amazon FSx for 
 
 ## Demo
 
-![alt text](resources/ONTAP-S3-Automation.gif, "Demo")
+![alt text](resources/ONTAP-S3-Automation.gif)
 
 ## License
 
