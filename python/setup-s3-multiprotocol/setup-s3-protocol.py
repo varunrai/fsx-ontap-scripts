@@ -14,9 +14,6 @@ from rich.table import Table
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Configuration Parameters
-CLUSTER_IP = '10.0.1.14'
-USERNAME = 'fsxadmin'
-PASSWORD = 'SuperSecretPassw0rd'
 AGGREGATE = 'aggr1'
 S3_USER = 's3user'
 REQUEST_TIMEOUT = 60
