@@ -15,6 +15,17 @@ Various automation scripts for Amazon FSx for NetApp ONTAP
 > The script requires the NetApp ONTAP Python SDK (`netapp-ontap` package). All configuration parameters (hostname, credentials, SVM name, domain, volume paths, user/group names and IDs) are configurable in the main() function. The script is designed for environments requiring multi-protocol (NFS/CIFS) access with Active Directory authentication.
 
 
+## [ontap-volume-config.py](/python/volume-config/ontap-volume-config.py) - The script manages volume creation and NAS configuration with UNIX permissions and ownership
+- Create volumes with full NAS configuration (junction path, security style, UNIX permissions, UID/GID)
+- Update existing volumes with new NAS parameters (permissions, ownership, export policy)
+- View detailed volume information including all NAS settings
+- List all volumes in an SVM with their configurations
+- Supports symbolic (rwxr-xr-x) permission
+
+> [!NOTE]
+> The script requires the NetApp ONTAP Python SDK (`netapp-ontap` package). Command-line interface supports create, update, info, and list operations. UNIX permissions are specified in symbolic format (e.g., rwxrwxr--, rwxr-xr-x). Use `--unix-permissions=value` syntax for symbolic permissions containing dashes.
+
+
 ## [sm-dp-volume-clone.py](/python/sm-dp-volume-clone.py) - The script allows a DP volume in a SnapMirror Relationship to be cloned for testing. 
 - Check for the SnapMirror Relationship for the Destination Volume
 - Check and Delete Clones (created previously)
