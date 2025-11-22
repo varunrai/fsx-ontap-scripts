@@ -26,7 +26,7 @@ Various automation scripts for Amazon FSx for NetApp ONTAP
 > The script requires the NetApp ONTAP Python SDK (`netapp-ontap` package). Command-line interface supports create, update, info, and list operations. UNIX permissions are specified in symbolic format (e.g., rwxrwxr--, rwxr-xr-x). Use `--unix-permissions=value` syntax for symbolic permissions containing dashes.
 
 
-## [sm-dp-volume-clone.py](/python/sm-dp-volume-clone.py) - The script allows a DP volume in a SnapMirror Relationship to be cloned for testing. 
+## [sm-dp-volume-clone.py](/python/ontap-dp-clone/sm-dp-volume-clone.py) - The script allows a DP volume in a SnapMirror Relationship to be cloned for testing. 
 - Check for the SnapMirror Relationship for the Destination Volume
 - Check and Delete Clones (created previously)
 - Resync SnapMirror if in Broken-Off state
